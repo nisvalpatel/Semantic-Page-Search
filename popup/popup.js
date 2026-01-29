@@ -24,8 +24,9 @@ async function runSearch() {
     return;
   }
 
-  setStatus('Searching…', '');
+  setStatus('Searching…', 'loading');
   searchBtn.disabled = true;
+  queryEl.disabled = true;
 
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -47,6 +48,7 @@ async function runSearch() {
     setStatus(err.message || 'Search failed.', 'error');
   } finally {
     searchBtn.disabled = false;
+    queryEl.disabled = false;
   }
 }
 
