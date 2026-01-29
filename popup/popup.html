@@ -12,7 +12,14 @@
       <h1 class="title">Semantic Find</h1>
       <p class="subtitle">Search by meaning, not exact words</p>
     </header>
-    <main class="main"></main>
+    <main class="main">
+      <div class="search-row">
+        <input type="text" class="search-input" id="query" placeholder="What are you looking for?" autocomplete="off" />
+        <button type="button" class="search-btn" id="searchBtn">Find</button>
+      </div>
+      <div class="status" id="status" aria-live="polite"></div>
+      <button type="button" class="clear-btn" id="clearBtn">Clear highlights</button>
+    </main>
   </div>
   <script src="popup.js"></script>
 </body>
