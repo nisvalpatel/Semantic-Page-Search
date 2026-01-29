@@ -1,0 +1,6 @@
+{
+  "name": "semantic-page-search",
+  "version": "1.0.0",
+  "description": "Chrome extension: smarter Ctrl+F using semantic search and embeddings",
+  "private": true
+}
