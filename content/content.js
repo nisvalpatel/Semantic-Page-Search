@@ -19,8 +19,34 @@
   });
 
   async function handleSearch(query, apiKey) {
-    return { matches: 0, error: null };
-  }
+    clearHighlights();
 
-  function clearHighlights() {}
+    const chunks = extractPageChunks();
+    if (chunks.length === 0) {
+      return { matches: 0, error: null };
+    }
+
+    const texts = [query, ...chunks.map((c) => c.text)];
+    let queryEmb;
+    let chunkEmbs;
+    try {
+      const allEmbs = await getEmbeddings(apiKey, texts);
+      queryEmb = allEmbs[0];
+      chunkEmbs = allEmbs.slice(1);
+    } catch (err) {
+      return { matches: 0, error: err.message || 'Embedding failed.' };
+    }
+
+    const scored = scoreChunks(queryEmb, chunkEmbs, 15);
+    let matchCount = 0;
+    for (const { index } of scored) {
+      const chunk = chunks[index];
+      if (chunk?.ranges?.length) {
+        highlightRanges(chunk.ranges);
+        matchCount += 1;
+      }
+    }
+
+    return { matches: matchCount, error: null };
+  }
 })();
