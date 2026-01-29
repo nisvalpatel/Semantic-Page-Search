@@ -41,11 +41,17 @@ async function runSearch() {
     });
     if (response?.error) {
       setStatus(response.error, 'error');
+    } else if (response?.matches === 0) {
+      setStatus('No matching sections found.', '');
     } else {
-      setStatus(response?.matches != null ? `${response.matches} match(es) found.` : 'Done.', 'success');
+      setStatus(response?.matches != null ? `${response.matches} section(s) highlighted.` : 'Done.', 'success');
     }
   } catch (err) {
-    setStatus(err.message || 'Search failed.', 'error');
+    const msg = err.message || 'Search failed.';
+    const hint = msg.includes('Receiving end') || msg.includes('Could not establish')
+      ? "This page can't be searched. Try a normal webpage."
+      : msg;
+    setStatus(hint, 'error');
   } finally {
     searchBtn.disabled = false;
     queryEl.disabled = false;

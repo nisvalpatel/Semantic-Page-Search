@@ -23,7 +23,7 @@
 
     const chunks = extractPageChunks();
     if (chunks.length === 0) {
-      return { matches: 0, error: null };
+      return { matches: 0, error: 'No text to search on this page.' };
     }
 
     const texts = [query, ...chunks.map((c) => c.text)];
