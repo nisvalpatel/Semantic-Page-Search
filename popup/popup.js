@@ -1,15 +1,53 @@
 'use strict';
 
+const setupView = document.getElementById('setupView');
+const searchView = document.getElementById('searchView');
+const apiKeyInput = document.getElementById('apiKeyInput');
+const saveKeyBtn = document.getElementById('saveKeyBtn');
 const queryEl = document.getElementById('query');
 const searchBtn = document.getElementById('searchBtn');
 const clearBtn = document.getElementById('clearBtn');
 const statusEl = document.getElementById('status');
+const openSettingsEl = document.getElementById('openSettings');
 
+(async function init() {
+  const key = await getApiKey();
+  if (key) {
+    setupView.hidden = true;
+    searchView.hidden = false;
+  } else {
+    setupView.hidden = false;
+    searchView.hidden = true;
+  }
+})();
+
+saveKeyBtn.addEventListener('click', saveKey);
+apiKeyInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') saveKey();
+});
 searchBtn.addEventListener('click', runSearch);
 clearBtn.addEventListener('click', clearHighlights);
+openSettingsEl.addEventListener('click', (e) => {
+  e.preventDefault();
+  chrome.runtime.openOptionsPage();
+});
 queryEl.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') runSearch();
 });
+
+async function saveKey() {
+  const key = (apiKeyInput.value || '').trim();
+  if (!key) {
+    apiKeyInput.focus();
+    return;
+  }
+  await new Promise((resolve) => {
+    chrome.storage.sync.set({ apiKey: key }, resolve);
+  });
+  setupView.hidden = true;
+  searchView.hidden = false;
+  apiKeyInput.value = '';
+}
 
 async function runSearch() {
   const query = (queryEl.value || '').trim();
@@ -20,7 +58,7 @@ async function runSearch() {
 
   const apiKey = await getApiKey();
   if (!apiKey) {
-    setStatus('Set your API key in extension options.', 'error');
+    setStatus('Add your API key in Settings, then try again.', 'error');
     return;
   }
 

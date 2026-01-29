@@ -13,12 +13,21 @@
       <p class="subtitle">Search by meaning, not exact words</p>
     </header>
     <main class="main">
-      <div class="search-row">
-        <input type="text" class="search-input" id="query" placeholder="What are you looking for?" autocomplete="off" />
-        <button type="button" class="search-btn" id="searchBtn">Find</button>
+      <div id="setupView" class="view" hidden>
+        <p class="setup-text">Enter your OpenAI API key to enable semantic search. It’s stored locally and only sent to OpenAI.</p>
+        <input type="password" class="search-input" id="apiKeyInput" placeholder="sk-…" autocomplete="off" />
+        <button type="button" class="search-btn" id="saveKeyBtn">Save & start</button>
+        <p class="setup-hint"><a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">Get an API key →</a></p>
       </div>
-      <div class="status" id="status" aria-live="polite"></div>
-      <button type="button" class="clear-btn" id="clearBtn">Clear highlights</button>
+      <div id="searchView" class="view" hidden>
+        <div class="search-row">
+          <input type="text" class="search-input" id="query" placeholder="What are you looking for?" autocomplete="off" />
+          <button type="button" class="search-btn" id="searchBtn">Find</button>
+        </div>
+        <div class="status" id="status" aria-live="polite"></div>
+        <button type="button" class="clear-btn" id="clearBtn">Clear highlights</button>
+        <p class="settings-link"><a href="#" id="openSettings">Settings</a></p>
+      </div>
     </main>
   </div>
   <script src="popup.js"></script>

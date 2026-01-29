@@ -123,3 +123,35 @@ body {
   background: #f1f5f9;
   color: #475569;
 }
+
+.view {
+  display: block;
+}
+
+.setup-text {
+  margin: 0 0 12px 0;
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.setup-text + .search-input {
+  margin-bottom: 10px;
+}
+
+.setup-hint,
+.settings-link {
+  margin: 10px 0 0 0;
+  font-size: 12px;
+}
+
+.setup-hint a,
+.settings-link a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.setup-hint a:hover,
+.settings-link a:hover {
+  text-decoration: underline;
+}
