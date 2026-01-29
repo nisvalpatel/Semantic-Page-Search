@@ -18,11 +18,17 @@ function ensureHighlightStyle() {
 
 /**
  * Highlight a set of ranges (each has node, start, end).
+ * Process in reverse document order so replacements don't invalidate later ranges.
  * @param {Array<{ node: Text, start: number, end: number }>} ranges
  */
 function highlightRanges(ranges) {
   ensureHighlightStyle();
-  for (const { node, start, end } of ranges) {
+  const sorted = [...ranges].sort((a, b) => {
+    const pos = a.node.compareDocumentPosition(b.node);
+    return pos & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+  });
+  for (const { node, start, end } of sorted) {
+    if (!document.contains(node)) continue;
     const text = node.textContent;
     if (start >= text.length || end > text.length) continue;
     const before = text.slice(0, start);
