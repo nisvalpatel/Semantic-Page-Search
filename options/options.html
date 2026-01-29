@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Semantic Find – Options</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <div class="options">
+    <h1>Semantic Find</h1>
+    <p class="description">Semantic search uses OpenAI embeddings. Enter your API key (stored locally, never sent except to OpenAI).</p>
+    <label for="apiKey">OpenAI API key</label>
+    <input type="password" id="apiKey" placeholder="sk-…" autocomplete="off" />
+    <div class="actions">
+      <button type="button" id="save">Save</button>
+      <span class="status" id="status"></span>
+    </div>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>
