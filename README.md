@@ -39,6 +39,3 @@
 - `options/` – Options page for API key
 - `content/` – Content scripts: extraction, embeddings, scoring, highlighting
 
-## License
-
-MIT
